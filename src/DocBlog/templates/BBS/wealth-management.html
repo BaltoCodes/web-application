@@ -1,0 +1,246 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Big Balto Rendement</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+
+
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            float: left;
+        }
+
+        nav li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav li a:hover {
+            background-color: #111;
+        }
+
+
+        body {
+            text-align: center;
+            background-color: black;
+            color: bisque;
+        }
+
+        .title {
+            color: antiquewhite
+        }
+
+        .tableau {
+            color: antiquewhite;
+            text-align: center;
+            position: relative;
+            margin-left: 150px;
+            margin-top: 150px;
+
+        }
+
+
+
+        .positif {
+            background-color: green;
+            text-align: center;
+            min-height:30px; 
+            min-width: 120px;
+            border:none; 
+            border-radius:5px; 
+
+        }
+
+        .negatif {
+            background-color: red;
+            text-align: center;
+            min-height:30px; 
+            min-width: 120px;
+            border:none; 
+            border-radius:5px; 
+            
+
+        }
+
+        .mois{
+            min-height:30px; 
+            min-width: 120px;
+            border:none; 
+            border-radius:5px; 
+
+        }
+
+        .tryouts{
+            text-align: center;
+        }
+
+
+        
+    </style>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+</head>
+
+<body>
+    <div class="navigator">
+        <nav>
+            <ul>
+                <li><a href="/accueil/">Accueil</a></li>
+                <li><a href="/chatbot/">ChatBot</a></li>
+                
+                <li><a href="/spotify/">Spotify App</a></li>
+                <li><a href="/hull/">Algorithmic trading</a>
+                <li><a href="/graph/">Analyse technique</a></li>
+            </ul>
+        </nav>
+    </div>
+
+
+    <div class="title">
+        <h1>Calcul de Rendement</h1>
+    </div>
+    <form action="{% url 'my-wealth' %}" method="get">
+        
+        <label for="start_date">Date de début :</label>
+        <input type="date" name="start_date" id="start_date" required>
+        <br><br>
+        <label for="end_date">Date de fin :</label>
+        <input type="date" name="end_date" id="end_date" required>
+        <br>
+        <br>
+
+
+<!-- 
+        <input type="text" id="date-range" readonly>
+        <button id="show-calendar">Sélectionner une Plage de Dates</button>
+
+        <script>
+            $(document).ready(function() {
+                $("#date-range").datepicker({
+                    range: true,  // Permet la sélection d'une plage de dates
+                    onSelect: function(dateText, inst, extensionRange) {
+                        $("#start_date").val(extensionRange.dates[0]);
+                        $("#end_date").val(extensionRange.dates[1]);
+                    }
+                });
+            
+                $("#show-calendar").click(function() {
+                    $("#date-range").datepicker("show");
+                });
+            });
+            </script>
+        -->
+
+        <input type="submit" value="Calculer le Rendement">
+    </form>
+
+
+    <div class="tableau">
+        {% if rendement is not None %}
+        <h1>Tableau de pourcentages</h1>
+        <table>
+          
+            <td>
+                {% for date in dates %}
+                <tr>                 
+                    <button class="mois">
+
+                        {{ date }}
+                    </button>
+                </tr>
+                
+
+                {% endfor %}
+            </td>
+            <br>
+
+            
+
+            
+                {% for pourcentage in rendement %}
+                
+                <tr>
+                    
+                        
+                        <button class="{% if pourcentage >= 0 %}positif{% else %}negatif{% endif %}">
+                            {{ pourcentage }}
+                        </button>
+                    
+                </tr>
+                {% endfor %}
+            
+        </table>
+        {% endif %}
+    </div>
+
+
+
+    <div class="tryouts">
+        <h1>Tryouts </h1>
+        {% if rendement is not None %}
+        <table>
+          
+            <td>
+                {% for month in months %}
+                <tr>                 
+                    <button class="mois">
+
+                        {{ month }}
+                    </button>
+                </tr>
+                
+
+                {% endfor %}
+            </td>
+            <br>
+
+            
+                {% for yea in year %}
+                <tr>
+                    <button class="mois">
+                        {{ yea }}
+                    </button>
+                </tr>
+                {% endfor %}
+
+
+                
+
+                {% for pourcentage in rendement %}
+                
+                <tr>
+                    
+                        
+                        <button class="{% if pourcentage >= 0 %}positif{% else %}negatif{% endif %}">
+                            {{ pourcentage }}
+                        </button>
+                    
+                </tr>
+                {% endfor %}
+            
+        </table>
+        {% endif %}
+    </div>
+</body>
+
+</html>

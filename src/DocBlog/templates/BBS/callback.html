@@ -1,0 +1,56 @@
+<!-- music_player/templates/music_player/library.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Spotify Library</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #e29888, #e8bd9d); /* Dégradé de couleurs chaudes */
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        #menu {
+            background: #333; /* Couleur de fond du menu */
+            color: white;
+            padding: 10px;
+        }
+
+        #menu ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #menu ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        #menu ul li:last-child {
+            margin-right: 0;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #fff;
+            margin-top: 100px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Ombre de texte */
+            font-family: 'Roboto', sans-serif; /* Police stylisée */
+        }
+    </style>
+</head>
+<body>
+    <h1>My Spotify Library</h1>
+        
+    <p>Nom de l'utilisateur : {{ name }}</p>
+    <p>Nombre de followers : {{ followers }}</p>
+    
+    <img src="{{ image }}" alt="Image de l'utilisateur">
+
+
+    
+</body>
+</html>

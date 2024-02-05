@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Graphique interactif</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: #333;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            float: left;
+        }
+
+        nav li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav li a:hover {
+            background-color: #111;
+        }
+
+        
+        #container {
+            width: 1000px;
+            height: 500px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /* Vous pouvez également ajouter d'autres styles de votre choix pour le module */
+            background-color: #da8080;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+
+
+    </style>
+    <canvas id="candlestickChart" width="800" height="400   "></canvas>
+
+    <script src="https://cdn.anychart.com/releases/8.7.1/js/anychart-core.min.js" type="text/javascript"></script>
+    <script src="https://cdn.anychart.com/releases/8.7.1/js/anychart-stock.min.js" type="text/javascript"></script>
+    <script src="https://cdn.anychart.com/releases/8.7.1/js/anychart-data-adapter.min.js"></script>
+
+    
+</head>
+<body>
+
+
+    <div class="navigator">
+        <nav>
+            <ul>
+                <li><a href="/accueil/">Accueil</a></li>
+                <li><a href="/chatbot/">ChatBot</a></li>
+                
+                <li><a href="/spotify/">Spotify App</a></li>
+                <li><a href="/hull/">Algorithmic trading</a>
+                <li><a href="/graph/">Analyse technique</a></li>
+
+                <!-- Ajoutez d'autres liens de navigation ici -->
+            </ul>
+        </nav>
+    </div>
+    
+    <div id="container"></div>
+    <script >
+        anychart.onDocumentReady(function () {
+
+            fetch('https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=30')
+                .then(response => response.json())
+                .then(data => {
+                    // Créer une table de données AnyChart
+                    var dataTable = anychart.data.table();
+                    // Convertir les données pour les adapter au format attendu par AnyChart
+                    var prices = data.prices.map(([timestamp, price]) => ({ 'value': [timestamp, price] }));
+                    dataTable.addData(prices);
+
+                    // Créer le graphique en bougies
+                    var chart = anychart.stock();
+                    var series = chart.plot(0).candlestick(dataTable.mapAs({ 'open': 'value.1', 'high': 'value.2', 'low': 'value.3', 'close': 'value.4' }));
+                    series.name("Prix du Bitcoin (USD)");
+
+                    // Définir le titre du graphique
+                    chart.title("Graphique en bougies du prix du Bitcoin (30 jours)");
+
+                    // Définir le conteneur du graphique
+                    chart.container('container');
+
+                    // Dessiner le graphique
+                    chart.draw();
+                })
+                .catch(error => {
+                    console.error('Une erreur s\'est produite lors de la récupération des données:', error);
+                });
+
+
+
+        });
+
+      
+
+
+
+
+    </script>  
+    </div>
+
+</body>
+</html>

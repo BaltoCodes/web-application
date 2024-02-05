@@ -1,0 +1,231 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Bot</title>
+    <link rel="stylesheet" href="{% static 'css/style_chatbot.css' %}">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            float: left;
+        }
+
+        nav li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav li a:hover {
+            background-color: #111;
+        }
+
+
+
+
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        
+        h1 {
+            text-align: center;
+            color: #008080;
+        }
+
+        form {
+            display: flex;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input[type="submit"] {
+            margin-left: 10px;
+            padding: 8px 16px;
+            border: none;
+            background-color: #008080;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .message-container {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .user-message {
+            background-color: #d1f1e0;
+        }
+
+       
+
+        .message {
+            margin: 0;
+            font-size: 16px;
+            word-wrap: break-word;
+        }
+
+
+
+        
+
+        /* Nouveau style pour .bot-message */
+        .bot-message {
+            background-color: #b97177;
+            color: #fff;
+            margin-right: 30px;
+            border-radius: 20px;
+            padding: 10px 20px;
+            position: relative;
+        }
+
+        /* Nouveau style pour .message-container */
+        .message-container {
+            margin: 10px 0;
+            padding: 2px;
+        }
+
+        /* Style pour créer une flèche de message */
+        .bot-message::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: -10px;
+            border: 10px solid transparent;
+            border-right-color: #b97177;
+            border-bottom: 0;
+        }
+
+        .text-enter{
+            
+            position: bottom;
+            
+
+        }
+        .user-message{
+
+            background-color: #47df63;
+            color: #fff;
+            margin-left: 30px;
+            border-radius: 20px;
+            padding: 10px 20px;
+            position: relative;
+        }
+
+        .user-message::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            right: -10px;
+            border: 10px solid transparent;
+            border-right-color: #47df63;
+            border-bottom: 0;
+        }
+
+       
+
+        
+
+    </style>
+</head>
+<body>
+
+
+    <div class="navigator">
+        <nav>
+            <ul>
+                <li><a href="/accueil/">Accueil</a></li>
+                <li><a href="/chatbot/">ChatBot</a></li>
+                
+                <li><a href="/spotify/">Spotify App</a></li>
+                <li><a href="/hull/">Algorithmic trading</a>
+                <li><a href="/graph/">Analyse technique</a></li>
+            </ul>
+        </nav>
+    </div>
+
+
+    <div class="container">
+        <h1>Chat bot</h1>
+        <!--<div class="message-container bot-message">
+            <p class="message">Start chatting </p>
+        </div> -->
+    
+        <!-- Ajoutez d'autres messages ici -->
+        <div class ="text-enter">
+            <form method="post" action="{% url 'get_message' %}">
+                {% csrf_token %}
+                <input type="text" name="expression" placeholder="Start chatting" required> 
+                <input type="submit" value="Envoyer">
+            </form>
+
+
+        </div>
+        
+
+        <div id="chat">
+            {% for message in messages %}
+                {% if message.user %}
+                    <div class="message-container user-message">
+                        <p>{{ message.user }}</p>
+                    </div>
+                {% endif %}
+                {% if message.bot %}
+                    <div class="message-container bot-message">
+                        <p>{{ message.bot }}</p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+<!--
+        {% if result %}
+            <h2>My AI :</h2>
+
+        <div class="message-cointainer bot-message">
+            <p>{{ result }}</p>
+        </div>
+        {% endif %} -->
+        
+
+    </div>
+
+
+   
+
+    
+</body>
+</html>

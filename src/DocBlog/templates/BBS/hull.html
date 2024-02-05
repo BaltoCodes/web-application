@@ -1,0 +1,148 @@
+<!-- calculate_option_price.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Option Pricing Calculator</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        /* Styles for the navigation menu */
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            float: left;
+        }
+
+        nav li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav li a:hover {
+            background-color: #111;
+        }
+
+
+        body{
+            background-color: rgb(252, 241, 241);
+            
+        }
+
+        .container{
+            background-color:black;
+        }
+        
+        nav ul ul{
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #442f2f; /* Couleur de fond du sous-menu */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Ombre pour un effet de profondeur */
+        }
+
+    </style>
+
+
+
+</head>
+<body>
+    <div class="navigator">
+        <nav>
+            <ul>
+                <li><a href="/accueil/">Accueil</a></li>
+                <li><a href="/chatbot/">ChatBot</a></li>
+                
+                <li><a href="/spotify/">Spotify App</a></li>
+                <li><a href="/hull/">Algorithmic trading</a>
+                <li><a href="/graph/">Analyse technique</a></li>
+                    
+   
+            </ul>
+        </nav>
+    </div>
+
+
+
+    <h2>Option Pricing Calculator</h2>
+    <form method="post" action="{% url 'hull' %}">
+        {% csrf_token %}
+        <label for="current_stock_price">Current Stock Price:</label>
+        <input type="number" name="current_stock_price" required><br>
+
+        <label for="strike_price">Strike Price:</label>
+        <input type="number" name="strike_price" required><br>
+
+        <label for="interest_rate">Interest Rate:</label>
+        <input type="number" name="interest_rate" required><br>
+
+        <label for="volatility">Volatility:</label>
+        <input type="number" name="volatility" required><br>
+
+        <label for="time_to_expiration">Time to Expiration:</label>
+        <input type="number" name="time_to_expiration" required><br>
+
+        <label for="option_type">Option Type:</label>
+        <select name="option_type" required>
+            <option value="call">Call Option</option>
+            <option value="put">Put Option</option>
+        </select><br>
+
+
+        <label for="nb_echantillons">Nombre d'échantillons : </label>
+        <input type="number" name="nb_echantillons" required><br>
+
+        <button type="submit">Calculate Option Price</button>
+    </form>
+
+
+
+    {% if stock_price_paths %}
+    <h3>Stock Price Paths</h3>
+    <div id="stock-price-paths"></div>
+
+    <script>
+        var stockPricePaths = {{ stock_price_paths|safe }};
+        var numSimulations = stockPricePaths.length;
+        var numDays = stockPricePaths[0].length;
+
+        var data = [];
+        for (var i = 0; i < numSimulations; i++) {
+            data.push({
+                type: 'scatter',
+                mode: 'lines',
+                name: 'Simulation ' + (i + 1),
+                x: Array.from({ length: numDays + 1 }, (_, j) => j),
+                y: stockPricePaths[i],
+            });
+        }
+
+        var layout = {
+            title: 'Stock Price Paths',
+            xaxis: { title: 'Days' },
+            yaxis: { title: 'Stock Price' },
+        };
+
+        Plotly.newPlot('stock-price-paths', data, layout);
+    </script>
+    {% endif %}
+
+
+
+    {% if option_price %}
+    <h3>Result</h3>
+    <p>The estimated option price is: {{ option_price }}</p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,360 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Page</title>
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #6b6868;
+        }
+
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            float: left;
+        }
+
+        nav li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav li a:hover {
+            background-color: #111;
+        }
+        .title {
+            font-size: 12px;
+            color: #dee2e6;
+            font-family: "Arial", sans-serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            text-align:center;
+        }
+
+        .earth{
+
+
+            position: absolute;
+            top: 10px;
+        }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@v0.149.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@v0.149.0/examples/jsm/"
+        }
+      }
+    </script>
+</head>
+<body> 
+
+    <div class="navigator">
+        <nav>
+            <ul>
+                <li><a href="/accueil/">Accueil</a></li>
+                <li><a href="/chatbot/">ChatBot</a></li>
+                
+                <li><a href="/spotify/">Spotify App</a></li>
+                <li><a href="/hull/">Algorithmic trading</a>
+                <li><a href="/graph/">Analyse technique</a></li>
+                
+            </ul>
+        </nav>
+    </div>
+    
+     <div class="earth">     
+        <script type="module" >
+            
+            //import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+            import { Flow } from 'three/addons/modifiers/CurveModifier.js';
+            import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+            
+    
+            import * as THREE from 'three';
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera( 75, window.innerWidth /
+            window.innerHeight, 0.1, 1000 );
+
+
+            const renderer = new THREE.WebGLRenderer();
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            document.body.appendChild( renderer.domElement );
+
+            const geometry = new THREE.SphereGeometry(5, 32, 32);
+            const geometryMoon = new THREE.SphereGeometry(0.001, 0.5, 0.5);
+
+
+            const textureLoader = new THREE.TextureLoader();
+            //const texture = textureLoader.load("{% static 'css/textures/earth.jpg' %}");
+
+            //const material = new THREE.MeshBasicMaterial({ map: texture });
+
+
+            const sphereGeometry = new THREE.SphereGeometry(1, 720, 360);
+            const material = new THREE.MeshPhongMaterial();
+            const texture = new THREE.TextureLoader().load("{% static 'css/textures/worldColour.jpg' %}");
+            material.map = texture;
+            const displacementMap = new THREE.TextureLoader().load("{% static 'css/textures/strm.jpg' %}");
+            material.displacementMap = displacementMap;
+            material.displacementScale = .5;
+
+
+            
+            const textureMoon = textureLoader.load("{% static 'css/textures/moon.jpg' %}");
+            const materialMoon = new THREE.MeshBasicMaterial({map:textureMoon})
+
+            const moon = new THREE.Mesh(geometry, materialMoon);
+            const earth = new THREE.Mesh(geometry, material);
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+            scene.add(ambientLight);
+            
+            scene.add(earth);
+            scene.add(moon);
+
+
+
+
+        
+
+
+            const colors = [
+        new THREE.Color(0x9F9494), // Red
+        new THREE.Color(0x5E5454), // Green
+        new THREE.Color(0x9F9D9D) // Blue
+        // Yellow
+         // Magenta
+        // Cyan
+      ];
+
+
+           
+            
+            //textMesh.position.set(2, 3, 0); // Changer les valeurs x, y, z pour ajuster la position du texte sur la Terre
+            
+            let backgroundColor = new THREE.Color(0x000000); // Black
+
+            const loader = new FontLoader();
+            loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function (font) {
+
+            const matLite = new THREE.MeshPhongMaterial({
+                color: 0xad180d,
+                transparent: false,
+                opacity: 0.8,
+                side: THREE.DoubleSide
+            });
+
+            const message = "Welcome";
+            const message_second ="The world is still yours";
+
+            const shapes = font.generateShapes(message, 0.7);
+
+            // Créez une extrusion pour le texte incurvé en 3D
+            const extrudeSettings = {
+                depth: 0.1, // épaisseur du texte
+                bevelEnabled: true,
+                bevelThickness: 0.03,
+                bevelSize: 0.02,
+                bevelSegments: 100,
+            };
+
+            const geometry = new THREE.ExtrudeGeometry(shapes, extrudeSettings);
+            geometry.computeBoundingBox();
+
+            // Centrez le texte
+            const xMid = - 0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
+            geometry.translate(xMid, 0, 0);
+
+            const text = new THREE.Mesh(geometry, matLite);
+            text.position.y = 3;
+            text.position.z=4;
+            text.rotation.x=-0.4;
+            earth.add(text);           
+            });
+
+
+
+
+
+
+            class CustomCurve extends THREE.Curve {
+            constructor() {
+                super();
+            }
+            getPoint(t) {
+                const a = 4; // Demi-grand axe
+                const b = 2; // Demi-petit axe
+                const theta = 2 * Math.PI * t; // Angle en fonction du paramètre t
+                const x = a * Math.cos(theta); // Coordonnée x de la trajectoire elliptique
+                const y = b * Math.sin(theta); // Coordonnée y de la trajectoire elliptique
+                const z = 0; // Coordonnée z (laissée à 0 pour un trajet en 2D)
+                return new THREE.Vector3(x, y, z).multiplyScalar(2);
+            }
+            }
+            const extrudeSettings = {
+                depth: 0.1, // épaisseur du texte
+                bevelEnabled: true,
+                bevelThickness: 0.03,
+                bevelSize: 0.02,
+                bevelSegments: 100,
+            };
+
+            const fontLoader = new FontLoader();
+            fontLoader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function (font) {
+
+
+                const matLite = new THREE.MeshPhongMaterial({
+                    color: 0xad180d,
+                    transparent: false,
+                    opacity: 0.8,
+                    side: THREE.DoubleSide
+                });
+                const message = "The world is still yours";
+                //const shapes = font.generateShapes(message, 0.32);
+
+                const curve = new CustomCurve();
+                //const geometry_tube = new THREE.TubeGeometry(curve, shapes.length, 0.01, 10, false);
+                
+
+             
+                
+               
+                const shapes = font.generateShapes(message, 0.8);
+
+                const geometry = new THREE.ExtrudeGeometry(shapes, extrudeSettings);
+                geometry.computeBoundingBox();
+
+                // Centrez le texte
+                const xMid = - 0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
+                geometry.translate(xMid, 0, 0);
+
+
+                const objectToCurve = new THREE.Mesh( geometry, matLite );
+
+                const flow = new Flow( objectToCurve );
+                flow.updateCurve( 0, curve );
+                //scene.add( flow.object3D );
+                flow.object3D.position.z=7;
+
+            });
+
+
+
+
+
+            // Function to update the background color
+            function updateBackgroundColor(targetColor, duration) {
+                    const startColor = backgroundColor.clone();
+                    let startTime = null;
+
+                    function animateBackground(time) {
+                    if (!startTime) startTime = time;
+                    const elapsedTime = time - startTime;
+                    const progress = Math.min(elapsedTime / duration, 1);
+
+                    // Linear interpolation between startColor and targetColor
+                    backgroundColor.copy(startColor).lerp(targetColor, progress);
+
+                    // Set the background color
+                    renderer.setClearColor(backgroundColor);
+
+                    if (progress < 1) {
+                        requestAnimationFrame(animateBackground);
+                    }
+                    }
+
+                    requestAnimationFrame(animateBackground);
+                }
+
+
+                function changeBackgroundColorRandomly() {
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                updateBackgroundColor(randomColor, 2500);
+            }
+
+            setInterval(changeBackgroundColorRandomly, 1000);
+
+
+
+
+
+            const light = new THREE.PointLight(0xffffff, 2, 50);
+            scene.add(light);
+            light.position.set(0, 2, 15);
+            light.color = new THREE.Color(0xffffff); // Jaune
+
+
+
+            camera.position.z = 20;
+            camera.position.y=0;
+            earth.position.y=0;
+            moon.position.x=-4;
+            moon.scale.x= 0.3;
+            moon.scale.y= 0.3;
+            moon.scale.z= 0.3;
+
+
+            const centerX = window.innerWidth / 2;
+        
+            const centerZ = window.innerDepth / 2;
+            const semiMajorAxis = 100; // Demi-grand axe
+            const semiMinorAxis = 50; // Demi-petit axe
+            let angle = 0;
+
+            function animate() {
+
+
+            requestAnimationFrame( animate );
+                earth.rotation.y += 0.007;
+                moon.rotation.y +=0.05;
+
+                const moonOrbitRadius = 12;
+                const moonOrbitRadiusZ = 6; 
+                const moonOrbitRadisuY =1.5; // Rayon de l'orbite de la lune autour de la Terre
+                const moonOrbitSpeed = 0.01; // Vitesse orbitale de la lune
+                const centerX=0;
+                const centerZ=0;
+                const centerY=0;
+                // Calcule les nouvelles coordonnées de la lune le long de son orbite elliptique
+                const moonX = centerX + moonOrbitRadius * Math.cos(angle);
+                const moonZ = centerZ + moonOrbitRadiusZ * Math.sin(angle);
+                const moonY = centerY + moonOrbitRadisuY *Math.sin(angle);
+                // Déplace la lune à sa nouvelle position
+                moon.position.set(moonX, moonY, moonZ);
+
+                // Fait tourner la lune sur son axe
+                moon.rotation.y += 0.005;
+
+                // Met à jour l'angle pour l'animation de l'orbite de la lune
+                angle += moonOrbitSpeed;
+
+
+                
+                
+            renderer.render( scene, camera );
+            }
+            animate();
+
+        </script>
+    </div> 
+</body>
+</html>
