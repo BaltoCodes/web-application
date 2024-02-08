@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BBSW</title>
+
+    <style>
+
+        body{
+            /* background-image: url("https://t4.ftcdn.net/jpg/02/23/22/27/360_F_223222773_ZUcdEU4wiKZXFCMBog3nAyK9p1bhdLN3.jpg");*/ 
+            background-color: aliceblue;
+            background-attachment: fixed;
+            background-size: cover; 
+            background-position: center; 
+
+        }
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            float: left;
+        }
+
+        nav li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav li a:hover {
+            background-color: #111;
+        }
+        .classe-actif {
+            width: 100%; /* Largeur de la page */
+            overflow: hidden; /* Pour contenir les éléments flottants */
+        }
+        
+        .classe-actif{
+            position: fixed;
+            top: 15%; 
+            left: 2%; 
+            background-color: #fffdfd; /* Couleur de fond du rectangle */
+            padding : 10px;
+            border-radius: 20px;
+            color: rgb(5, 5, 5);
+            margin-top: 10px;
+            text-align: justify;
+            width:300px;
+            height:400px;
+            font-size: smaller;
+        }
+        .numero_uno{
+            text-align: center;
+            margin-top: 2%;
+            font-size:medium;
+            margin:0;
+        }
+        .premiere-classe, .seconde-classe,  .troisieme-classe{
+            background-color: #dd6c6c; /* Couleur de fond du rectangle */
+            height: 40px;
+            width: 300px;
+            margin-top: 5px;
+            text-align: center;
+            font-style: bold;
+            border-radius: 20px;
+            cursor:grab;
+        }
+    
+        .hidden {
+            display:none; /* Contenu initiallement caché */
+        }
+
+        #content {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #dd6c6c;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-style: bold;
+        }
+    
+    </style>
+
+
+    
+</head>
+<body>
+    <section>
+
+
+
+        <div class="navigator">
+            <nav>
+                <ul>
+                    <li><a href="/plan-investissement/">Mon plan d'investissement</a></li>
+                    <li><a href="/me-former/">Formation / Newsletter</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+
+        
+
+        <div class="classe-actif">
+            <div class="numero_uno">
+                <p>Un investissement peut être effectué dans différents domaines, dans différentes entreprises ou biens matériels, immatériels, </n>
+                afin de générer un rendement en espérant une montée de la valeur de ces biens. Il existe principalement 3 classes d'actifs. </p>
+            </div>
+            <button  class="premiere-classe">Les obligations / FOREX</button>
+            <button  class="seconde-classe">Les biens matériels</button>
+            <button  class="troisieme-classe">Les actions</button>
+        </div>
+
+
+        <div id="content" >
+
+            <h2>Contenu affiché au milieu de la page</h2>
+                
+        </div> 
+        <script>
+            document.querySelectorAll('.class-actif button').forEach(button => {
+                button.addEventListener('click', () => {
+                    // Récupération du texte du bouton cliqué
+                    const buttonText = button.textContent;
+                
+                    document.getElementById('content').innerHTML = buttonText;
+                    document.getElementById('content').classList.add('hidden');
+                });
+            });
+        </script>
+
+
+
+    
+
+     
+        
+    </section>
+</body>

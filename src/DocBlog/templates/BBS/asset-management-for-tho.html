@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BBSW</title>
+    <link rel="stylesheet" href="{% static 'css/style_thomas.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="navigator">
+            <nav >
+                <ul>
+                    <li><img src="{% static 'css/husky.png' %}" id="icone"></li>
+                    <li><a href="/plan-investissement/">Mon plan d'investissement</a></li>
+                    <li><a href="/me-former/">Formation / Newsletter</a></li>
+                </ul>
+            </nav>
+        </div>
+    
+        <div class="bouton-principal">
+            <h2>Big Balto Cash Management</h2>
+        </div>
+        <div class="rotating" >
+            <img src="{% static 'css/husky.png' %}">
+            
+        </div>
+        <div class="bouton">  
+            <button id="bouton" type="submit">Je commence mon plan d'épargne</button>
+        </div>
+        <div class="rotating_two" >
+            <img src="{% static 'css/husky.png' %}">
+            
+        </div>
+        
+        
+        
+        <script>
+            document.getElementById("bouton").addEventListener("click", function() {
+                window.location.href = "/plan-investissement/";
+            });
+            document.getElementById("icone").addEventListener("click", function() {
+                window.location.href = "/thomas/";
+            });
+        </script>
+    </div>
+   
+</body>

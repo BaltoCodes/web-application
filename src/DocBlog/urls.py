@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from .views import index, graph_view, calculator_view, get_message, world_is_yours, interactive_graph,spotify, rendement_wealth_management,  spotify_callback, obtenir_login, hull, world
+from .views import index, graph_view, calculator_view, get_message, world_is_yours, interactive_graph,spotify, rendement_wealth_management,  spotify_callback, obtenir_login, hull, world, thomas, plan_investissement, formation
 from . import views
 
 
@@ -33,5 +33,9 @@ urlpatterns = [
     path('callback/', spotify_callback, name="callback"), #Utilisé fonctionnel
     path('obtenir_login/', obtenir_login, name="Les chiffres les vrais"), #Utilisé fonctionnel
     path('my-wealth/', rendement_wealth_management, name="my-wealth"),
-    path('hull/', hull, name="hull")
+    path('hull/', hull, name="hull"), 
+    path('thomas/', thomas, name="thomas"),
+    path('plan-investissement/', plan_investissement, name="plan_investissement"),
+    path('me-former/', formation, name="Me former")
+    #path('create-user/', create_user, name="Create new user")
 ]

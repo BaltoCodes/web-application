@@ -1,0 +1,201 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BBSW</title>
+    <link rel="stylesheet" href="{% static 'css/style_plateforme_investissement_base.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+    
+</head>
+<body>
+    <section>
+
+
+
+        <div class="navigator">
+            <nav >
+                <ul>
+                    <li><img src="{% static 'css/husky.png' %}" id="icone"></li>
+                    <li><a href="/plan-investissement/">Mon plan d'investissement</a></li>
+                    <li><a href="/me-former/">Formation / Newsletter</a></li>
+                </ul>
+            </nav>
+        </div>
+
+    
+
+        <div class="selection">
+            <h4>Définir mon profil investisseur : </h4>
+            <div class="disclaimer">
+                <p>Aucune information n'est divulguée ou gardée en mémoire</p>
+
+            </div>
+
+            <div class="selector">
+
+            
+            <form method="post" action="{% url 'plan_investissement' %}" id="myForm">
+                {% csrf_token %}
+                
+                <div class="input-group">
+                    <label for="revenu">Revenu mensuel :</label>
+                    <input type="number" name="revenu" id="revenu" required >
+                </div>
+            
+                <div class="input-group align-input">
+                    <label for="epargne">Je suis prêt à épargner :</label>
+                    <input type="number" name="epargne" id="epargne" required >
+                </div>
+            
+                <div class="input-group">
+                    <label for="total-asset">J'ai de côté :</label>
+                    <input type="number" name="total-asset" id="total-asset"  required >
+                </div>
+            
+                <div class="input-group">
+                    <label for="but-investissement">Je souhaite investir pour ...</label>
+                    <select name="but-investissement" required>
+                        <option value="generer un rendement interessant">Générer un rendement intéressant</option>
+                        <option value="put">Investir sur le long terme</option>
+                    </select>
+                </div>
+                
+                    
+                <div class="input-group">
+                    <label for="risque">Pour moi, avoir une position de 1000 euros et être en perte de 200 euros ... </label>
+                    <select name="risque" required>
+                        <option value="risque-averse">Je m'en fous</option>
+                        <option value="risque-sensible">Surtout pas !</option>
+                    </select><br>
+                </div>
+
+                
+                <div class="bouton-selection">
+                    <button type="submit" id="bouton-selection">Calculer mon plan d'investissement </button>
+                </div>
+            
+
+            </div>
+            </form>
+
+            <div class="chart">
+                <canvas id="myChart" width="200" height="200"></canvas>
+            </div>
+        
+        </div>
+        
+
+        
+    
+
+
+        
+        <div class="affinage">
+            <h4>Définir mes préférences d'investissement</h4>
+            <form method="post" action="{% url 'plan_investissement' %}" id="secondForm">
+                {% csrf_token %}
+                
+                <div class="input-group">
+                    <label for="revenu">Montant à investir : </label>
+                    <input type="number" name="montant" id="montant" required >
+                </div>
+            
+                <p>Dans quoi je souhaite investir</p>
+                <div class="categories">
+                    <div class="input-group-categ">
+                        <label for="or">Or </label>
+                        <input type="checkbox" name="or" id="or"  required >
+                    </div>
+                    <div class="input-group-categ">
+                        <label for="immobilier">Immobilier </label>
+                        <input type="checkbox" name="immobilier" id="immobilier"  required >
+                    </div>
+                    <div class="input-group-categ">
+                        <label for="Actions">Actions </label>
+                        <input type="checkbox" name="actions" id="actions"  required >
+                    </div>
+                    <div class="input-group-categ">
+                        <label for="cryptomonnaies">Cryptomonnaies </label>
+                        <input type="checkbox" name="cryptomonnaies" id="cryptomonnaies"  required >
+                    </div>
+                    <div class="input-group-categ">
+                        <label for="prod-structu">Produits structurés </label>
+                        <input type="checkbox" name="prod-structu" id="prod-structu"  required >
+                    </div>
+                    <div class="input-group-categ">
+                        <label for="etf">ETF / indices</label>
+                        <input type="checkbox" name="etf" id="etf"  required >
+                    </div>
+                </div>
+                
+            
+
+                
+                <div class="bouton-selection-second">
+                    <button type="submit" id="bouton-selection-second">Calculer mon plan d'investissement </button>
+                </div>
+            
+
+            </div>
+            </form>
+        </div>
+        <script>
+            
+            document.getElementById("icone").addEventListener("click", function() {
+                window.location.href = "/thomas/";
+            });
+
+            
+            const form = document.getElementById('myForm');
+
+            form.addEventListener('submit', function(event) {
+                const existingChart = Chart.getChart('myChart');
+
+                if (existingChart) {
+                    // Détruire le graphique existant
+                    existingChart.destroy();
+                }
+                event.preventDefault(); 
+
+                // Récupération des valeurs des champs
+                const revenu = parseFloat(document.getElementById('revenu').value);
+                const epargne = parseFloat(document.getElementById('epargne').value);
+                const totalAsset = parseFloat(document.getElementById('total-asset').value);
+
+                const data = {
+                    labels: ['Revenu', 'Épargne', 'Total Asset'],
+                    datasets: [{
+                        data: [revenu, epargne, totalAsset],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.5)', // Rouge
+                            'rgba(54, 162, 235, 0.5)', // Bleu
+                            'rgba(255, 206, 86, 0.5)', // Jaune
+                        ],
+                        borderWidth: 2
+                    }]
+                };
+
+                // Configuration du Pie Chart
+                const config = {
+                    type: 'pie',
+                    data: data,
+                };
+                
+
+                // Dessiner le Pie Chart
+                const ctx = document.getElementById('myChart').getContext('2d');
+                new Chart(ctx, config);
+            });
+            
+        </script>
+
+
+
+
+
+    </section>
+</body>

@@ -23,6 +23,8 @@ from keras import Sequential, optimizers # Sequential groups a linear stack of l
 from keras.layers import Dense, Dropout
 from yahoo_fin.stock_info import get_data
 
+#from .forms import CustomUserCreationForm
+
 
 ##########  Variables   ##########
 client_id = '7cb7124d4b2c48ec8dc755744a6451ce'
@@ -74,8 +76,78 @@ def world(request):
     return render(request, "BBS/world-V1.html")
 
 
+def thomas(request): 
+    return render(request, "BBS/asset-management-for-tho.html")
+
+def formation(request):
+    return render(request, "BBS/formation.html")
 
 
+
+#def create_user(request):
+    #if request.method == 'POST':
+     #   form = CustomUserCreationForm(request.POST)
+      #  if form.is_valid():
+       #     form.save()
+        #    return redirect('index')  # Redirigez vers la page d'accueil ou une autre page
+    #else:
+     #   form = CustomUserCreationForm()
+    #return render(request, 'create_user.html', {'form': form})
+
+
+
+def plan_investissement(request):
+     response=None
+     if request.method == 'POST':
+        # Récupérer les données du formulaire
+        revenu = int(request.POST['revenu'])
+        epargne = int(request.POST['epargne'])
+        risque=bool(request.POST['risque'])
+        total_asset= int(request.POST['total-asset'])
+        but_investissement=(request.POST['but-investissement'])
+
+        if but_investissement == 'put':
+            msci_world=0.3
+            eurostoxx_50=0.2
+            cac40=0.2
+            emerging_markets=0.15
+            actions_indiv=0.15
+
+            data={
+                "MSCI WORLD":0.3,
+                "EUROSTOXX 50":0.2,
+                "CAC40":0.2,
+                "EMERGING MARKETS":0.15,
+                "ACTIONS INDIVIDUELLES":0.15
+            }
+            labels = data.keys()
+            sizes = data.values()
+
+
+            fig, ax = plt.subplots()
+            ax.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
+            ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+
+
+
+
+            buffer = io.BytesIO()
+            plt.savefig(buffer, format='png')
+            buffer.seek(0)
+            image_png = buffer.getvalue()
+            buffer.close()
+
+            # Encodage de l'image en base64
+            graphic = urllib.parse.quote(base64.b64encode(image_png))
+
+            # Création d'une réponse HTTP contenant l'image
+            response = HttpResponse(graphic, content_type='image/png')
+            buffer.close()
+            return render(request, "BBS/plan-investissement.html",  {'image': response})
+
+        
+
+     return render(request, "BBS/plan-investissement.html")
 
 
 
@@ -437,9 +509,9 @@ def calculator_view(request):
 
 
 
-nltk.download("punkt")
-nltk.download("wordnet")
-lm = WordNetLemmatizer()
+#nltk.download("punkt")
+#nltk.download("wordnet")
+#lm = WordNetLemmatizer()
 
 data = {"intents": [
 

@@ -1,0 +1,117 @@
+
+html, body{
+    /*background-image: url("https://t4.ftcdn.net/jpg/02/23/22/27/360_F_223222773_ZUcdEU4wiKZXFCMBog3nAyK9p1bhdLN3.jpg");*/
+    background-attachment: fixed;
+    background: linear-gradient(to bottom right, rgba(216, 186, 228, 0.438),  rgba(255, 117, 117, 0) );
+    background-size: cover; 
+    background-position: center; 
+    margin: 0; 
+    padding: 0;
+    
+    height: 100vh;
+    width: 100%;
+
+
+}
+nav {
+    /*background-color: linear-gradient(to right, rgba(116, 1, 162, 0.438), rgba(255, 255, 255, 0));*/
+    background: linear-gradient(to bottom right, rgba(116, 1, 162, 0.438),  rgba(0, 0, 0, 0) );
+    margin-top: 0;
+    margin-right: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 50px;
+}
+
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    float: left;
+}
+
+nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    text-transform: uppercase;
+    font-style: bold;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+nav li a:hover {
+    background-color: #111;
+}
+
+#icone{
+    height: 50px;
+    width: 50px;
+}
+
+
+
+
+.rotating,.bouton,  .rotating_two  {
+    display: inline-block; /* Afficher les éléments sur une même ligne */
+    vertical-align: middle; /* Aligner verticalement les éléments */
+}
+.rotating, .rotating_two {
+    margin: 0 140px; /* Ajouter de l'espace entre les images */
+}
+
+@keyframes rotate {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
+}
+@keyframes rotate_two {
+    from { transform: rotateY(180deg); }
+    to { transform: rotateY(-180deg); }
+}
+
+.rotating img  {
+    animation: rotate 6s linear infinite; /* Appliquer l'animation aux images */
+    width: 350px; /* Ajuster la taille des icônes selon vos besoins */
+    height: 350px; /* Ajuster la taille des icônes selon vos besoins */
+}
+
+.rotating_two img{
+    animation: rotate_two 6s linear infinite; /* Appliquer l'animation aux images */
+    width: 350px; /* Ajuster la taille des icônes selon vos besoins */
+    height: 350px; /* Ajuster la taille des icônes selon vos besoins */
+}
+
+.bouton-principal{
+    position: center;
+    color: rgb(12, 6, 6);
+    text-align: center;
+    padding: 14px 16px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: larger;
+
+}
+
+
+#bouton{ 
+    color: #000000;
+    display: inline-block;
+    background-color:  rgba(116, 1, 162, 0.438);
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;          
+    height: 50px;
+    width: 200px;
+    
+}
+
+
+
+
+
+
