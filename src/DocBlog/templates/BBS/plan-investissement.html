@@ -226,16 +226,43 @@
                 var revenu = parseFloat(document.getElementById('montant').value);
                 var risque = parseFloat(document.getElementById('slider').value);
                 var frequence = parseFloat(document.getElementById('sliderTwo').value);
-
-
+                
+                var or = document.getElementById('or').checked ? 1 : 0;
+                var etf = document.getElementById('etf').checked ? 1 : 0;
+                var prodStructu = document.getElementById('prod-structu').checked ? 1 : 0;
+                var actions = document.getElementById('actions').checked ? 1 : 0;
+                var immobilier = document.getElementById('immobilier').checked ? 1 : 0;
+                var cryptomonnaies = document.getElementById('cryptomonnaies').checked ? 1 : 0;
+              
                 const radioButtons = document.querySelectorAll('input[type="radio"]');
 
+
+                function filterData(or, immobilier, actions, cryptomonnaies, prodStructu, etf) {
+                    const filteredData = {
+                        labels: ['ETF / Indices', 'Cryptomonnaies', 'Actions', 'Immobilier', 'Matières primaires', 'Produits structurés', 'Crypto'],
+                        datasets: [{
+                            data: [etf === 1 ? '20' : 0, cryptomonnaies === 1 ? '20' : 0, actions === 1 ? '20' : 0, immobilier === 1 ? '20' : 0, or === 1 ? '20':0 , prodStructu ===1 ? '20' : 0],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.5)' , // Rouge
+                                'rgba(54, 162, 235, 0.5)', // Bleu
+                                'rgba(255, 206, 86, 0.5)' , // Jaune
+                            'rgba(75, 192, 192, 0.5)' , // Vert
+                            ],
+                            borderWidth: 1
+                        }]
+                    };
+
+                    return filteredData;
+                }
+
+                /*
                 let or = 0;
                 let immobilier = 0;
                 let actions = 0;
                 let cryptomonnaies = 0;
                 let prodStructu = 0;
                 let etf = 0;
+                */
                 radioButtons.forEach(function(radioButton) {
                     radioButton.addEventListener('change', function() {
                         const id = this.id;
@@ -254,43 +281,20 @@
                         } else if (id === 'etf') {
                             etf = value;
                         }
-
+                        const filteredData = filterData(or, immobilier, actions, cryptomonnaies, prodStructu, etf);
+                        updateChart();
+                        
                         
                     });
                 });
-
-                /*
-                function filterAssets(data) {
-                    return data.filter(asset => asset.value !== 0);
-                }
+                const filteredData = filterData(or, immobilier, actions, cryptomonnaies, prodStructu, etf);
 
 
-                data.datasets[0].data = filterAssets(data.datasets[0].data);
-                updateChart();
-                */ 
-
-
-
-                var data = {
-                    labels: ['ETF / Indices', 'Cryptomonnaies', 'Actions', 'Immobilier', 'Matières primaires', 'Produits structurés', 'Crypto'],
-                    datasets: [{
-                        data: ['20', '20', '20', '20', frequence, risque],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.5)', // Rouge
-                            'rgba(54, 162, 235, 0.5)', // Bleu
-                            'rgba(255, 206, 86, 0.5)', // Jaune
-                        ],
-                        borderWidth: 2
-                    }]
-                };
-
-
-                
 
 
                 const config = {
                     type: 'pie',
-                    data: data,
+                    data: filteredData,
                 };
                 
                 //Pie Chart
@@ -303,7 +307,7 @@
                 const sliderFrequence = document.getElementById('sliderTwo');
                 sliderFrequence.addEventListener('input', function() {
                     frequence = parseFloat(this.value);
-                    data.datasets[0].data[1] = frequence;
+                    filteredData.datasets[0].data[1] = frequence;
                     updateChart();
                 });
 
@@ -311,22 +315,29 @@
                 const sliderRisque = document.getElementById('slider');
                 sliderRisque.addEventListener('input', function() {
                     risque = parseFloat(this.value);                    
-                    data.datasets[0].data[2] = risque;
+                    filteredData.datasets[0].data[2] = risque;
                     updateChart();
                 });
+
+
 
                 function updateChart() {
                     const existingChart = Chart.getChart('secondChart');
                     if (existingChart) {
                         existingChart.destroy();
                     }
+                    const filteredData = filterData(or, immobilier, actions, cryptomonnaies, prodStructu, etf);
+
+
                     const ctx = document.getElementById('secondChart').getContext('2d');
                     new Chart(ctx, {
                         type: 'pie',
-                        data: data,
+                        data: filteredData,
                     });
                 }
+        
             });
+
             
         </script>
 </body>
