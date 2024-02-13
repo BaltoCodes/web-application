@@ -21,7 +21,10 @@ class ProfilInvestisseur(forms.Form):
     total_asset=forms.NumberInput(label='total-asset')
     bur_investissement=forms.TextInput(label='but-investissement')
     risque=forms.TextInput(label='risque')
-    
+
+
+class ClasseActifs(forms.Form):
+    montant=forms.NumberInput(label='montant')
 
     
 

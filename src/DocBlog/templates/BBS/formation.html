@@ -1,101 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>BBSW</title>
-
-    <style>
-
-        body{
-            /* background-image: url("https://t4.ftcdn.net/jpg/02/23/22/27/360_F_223222773_ZUcdEU4wiKZXFCMBog3nAyK9p1bhdLN3.jpg");*/ 
-            background-color: aliceblue;
-            background-attachment: fixed;
-            background-size: cover; 
-            background-position: center; 
-
-        }
-        nav {
-            background-color: #333;
-            overflow: hidden;
-        }
-
-        nav ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        nav li {
-            float: left;
-        }
-
-        nav li a {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-
-        nav li a:hover {
-            background-color: #111;
-        }
-        .classe-actif {
-            width: 100%; /* Largeur de la page */
-            overflow: hidden; /* Pour contenir les éléments flottants */
-        }
-        
-        .classe-actif{
-            position: fixed;
-            top: 15%; 
-            left: 2%; 
-            background-color: #fffdfd; /* Couleur de fond du rectangle */
-            padding : 10px;
-            border-radius: 20px;
-            color: rgb(5, 5, 5);
-            margin-top: 10px;
-            text-align: justify;
-            width:300px;
-            height:400px;
-            font-size: smaller;
-        }
-        .numero_uno{
-            text-align: center;
-            margin-top: 2%;
-            font-size:medium;
-            margin:0;
-        }
-        .premiere-classe, .seconde-classe,  .troisieme-classe{
-            background-color: #dd6c6c; /* Couleur de fond du rectangle */
-            height: 40px;
-            width: 300px;
-            margin-top: 5px;
-            text-align: center;
-            font-style: bold;
-            border-radius: 20px;
-            cursor:grab;
-        }
-    
-        .hidden {
-            display:none; /* Contenu initiallement caché */
-        }
-
-        #content {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #dd6c6c;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            font-style: bold;
-        }
-    
-    </style>
-
-
-    
+    <link rel="stylesheet" href="{% static 'css/style_formation.css' %}">
+ 
 </head>
 <body>
     <section>
@@ -105,6 +15,7 @@
         <div class="navigator">
             <nav>
                 <ul>
+                    <li><img src="{% static 'css/husky.png' %}" id="icone"></li>
                     <li><a href="/plan-investissement/">Mon plan d'investissement</a></li>
                     <li><a href="/me-former/">Formation / Newsletter</a></li>
                 </ul>

@@ -84,20 +84,9 @@ def formation(request):
 
 
 
-#def create_user(request):
-    #if request.method == 'POST':
-     #   form = CustomUserCreationForm(request.POST)
-      #  if form.is_valid():
-       #     form.save()
-        #    return redirect('index')  # Redirigez vers la page d'accueil ou une autre page
-    #else:
-     #   form = CustomUserCreationForm()
-    #return render(request, 'create_user.html', {'form': form})
-
-
-
 def plan_investissement(request):
      response=None
+     '''
      if request.method == 'POST':
         # Récupérer les données du formulaire
         revenu = int(request.POST['revenu'])
@@ -145,8 +134,8 @@ def plan_investissement(request):
             buffer.close()
             return render(request, "BBS/plan-investissement.html",  {'image': response})
 
-        
-
+    '''
+    
      return render(request, "BBS/plan-investissement.html")
 
 

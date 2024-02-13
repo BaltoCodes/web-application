@@ -3,6 +3,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+
     <title>BBSW</title>
     <link rel="stylesheet" href="{% static 'css/style_plateforme_investissement_base.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -12,10 +14,6 @@
     
 </head>
 <body>
-    <section>
-
-
-
         <div class="navigator">
             <nav >
                 <ul>
@@ -26,8 +24,7 @@
             </nav>
         </div>
 
-    
-
+<!--
         <div class="selection">
             <h4>Définir mon profil investisseur : </h4>
             <div class="disclaimer">
@@ -87,89 +84,197 @@
             </div>
         
         </div>
+    -->
         
 
         
     
 
 
-        
+    <div class="whole">
         <div class="affinage">
             <h4>Définir mes préférences d'investissement</h4>
             <form method="post" action="{% url 'plan_investissement' %}" id="secondForm">
                 {% csrf_token %}
                 
                 <div class="input-group">
-                    <label for="revenu">Montant à investir : </label>
+                    <label for="montant">Montant à investir : </label>
                     <input type="number" name="montant" id="montant" required >
                 </div>
             
                 <p>Dans quoi je souhaite investir</p>
                 <div class="categories">
                     <div class="input-group-categ">
-                        <label for="or">Or </label>
-                        <input type="checkbox" name="or" id="or"  required >
+                        <label for="or">Matières primaires (Or / Argent) </label>
+                        <input type="radio" name="or" id="or"   >
                     </div>
                     <div class="input-group-categ">
                         <label for="immobilier">Immobilier </label>
-                        <input type="checkbox" name="immobilier" id="immobilier"  required >
+                        <input type="radio" name="immobilier" id="immobilier"   >
                     </div>
                     <div class="input-group-categ">
                         <label for="Actions">Actions </label>
-                        <input type="checkbox" name="actions" id="actions"  required >
+                        <input type="radio" name="actions" id="actions"  >
                     </div>
                     <div class="input-group-categ">
                         <label for="cryptomonnaies">Cryptomonnaies </label>
-                        <input type="checkbox" name="cryptomonnaies" id="cryptomonnaies"  required >
+                        <input type="radio" name="cryptomonnaies" id="cryptomonnaies"  >
                     </div>
                     <div class="input-group-categ">
                         <label for="prod-structu">Produits structurés </label>
-                        <input type="checkbox" name="prod-structu" id="prod-structu"  required >
+                        <input type="radio" name="prod-structu" id="prod-structu"   >
                     </div>
                     <div class="input-group-categ">
                         <label for="etf">ETF / indices</label>
-                        <input type="checkbox" name="etf" id="etf"  required >
+                        <input type="radio" name="etf" id="etf"  >
                     </div>
                 </div>
                 
-            
+
+
+                <div class="slider">
+                    <label for="slider">Mon taux de risque :</label>
+                    <div class="slider-and-tooltip">
+                        <input type="range" id="slider" name="slider" min="0" max="10" value="5" step="0.1">
+                        <span class="tooltip">
+                            <span class="bubble">Le risque peut être mesuré comme ceci : si, sur un investissement de 1000 euros, on ne souhaite pas avoir de moins value de 200 euros, alors le risque doit être bas</span>
+                        </span>
+                    </div>
+                    <output for="slider" id="sliderValue">5</output>
+
+                    
+                </div>
+                
+                <script>
+                    // Sélection du slider et de l'élément de sortie
+                    const slider = document.getElementById("slider");
+                    const output = document.getElementById("sliderValue");
+                  
+                    // Met à jour la valeur affichée en temps réel lorsqu'on déplace le slider
+                    slider.addEventListener('input', function() {
+                      output.textContent = slider.value;
+                    });
+                  </script>
+
+
+                <div class="frequence">
+                    <label for="frequence">Ma fréquence d'investissement :</label>
+                    
+                    <input type="range" id="sliderTwo" name="sliderTwo" min="0" max="10" value="5" step="0.1">
+                    <output for="sliderTwo" id="sliderValueFreq">Souvent</output>
+                </div>
+
+
+                <script>
+                    // Sélection du slider et de l'élément de sortie
+                    const slider_second = document.getElementById("sliderTwo");
+                    const output_second = document.getElementById("sliderValueFreq");
+                  
+                    // Met à jour la valeur affichée en temps réel lorsqu'on déplace le slider
+                    slider_second.addEventListener('input', function() {
+                        if (slider_second.value > 7.5){
+                            output_second.textContent="Très souvent";
+                        }
+                        else if (slider_second.value <7.5 && slider_second.value>5){
+                            output_second.textContent="Une fois par mois";
+                        }
+                        else if (slider_second.value >2.5 && slider_second.value<5){
+                            output_second.textContent="Une fois par an";
+                        }
+                        else if (slider_second.value<2.5){
+                            output_second.textContent="Une fois que c'est fait je ne veux plus en entendre parler";
+                        };
+                    });
+                </script>
 
                 
+            
                 <div class="bouton-selection-second">
                     <button type="submit" id="bouton-selection-second">Calculer mon plan d'investissement </button>
                 </div>
             
 
-            </div>
-            </form>
-        </div>
-        <script>
             
+            </form>
+            
+        </div>
+        <div class="secondChart">
+            <canvas id="secondChart" width="400" height="400"></canvas>
+        </div>
+
+    </div>    
+
+      
+
+        <script>
+            //Renvoi vers la page d'accueil si on clique sur le wolf
             document.getElementById("icone").addEventListener("click", function() {
                 window.location.href = "/thomas/";
             });
 
-            
-            const form = document.getElementById('myForm');
 
-            form.addEventListener('submit', function(event) {
-                const existingChart = Chart.getChart('myChart');
+            //Lorsqu'on appuie sur le bouton, calcul de la première répartition d'actifs
+            const secondForm = document.getElementById('secondForm');
+            secondForm.addEventListener('submit', function(event) {
+                const existingChart = Chart.getChart('secondChart');
 
                 if (existingChart) {
-                    // Détruire le graphique existant
                     existingChart.destroy();
                 }
                 event.preventDefault(); 
 
-                // Récupération des valeurs des champs
-                const revenu = parseFloat(document.getElementById('revenu').value);
-                const epargne = parseFloat(document.getElementById('epargne').value);
-                const totalAsset = parseFloat(document.getElementById('total-asset').value);
+                var revenu = parseFloat(document.getElementById('montant').value);
+                var risque = parseFloat(document.getElementById('slider').value);
+                var frequence = parseFloat(document.getElementById('sliderTwo').value);
 
-                const data = {
-                    labels: ['Revenu', 'Épargne', 'Total Asset'],
+
+                const radioButtons = document.querySelectorAll('input[type="radio"]');
+
+                let or = 0;
+                let immobilier = 0;
+                let actions = 0;
+                let cryptomonnaies = 0;
+                let prodStructu = 0;
+                let etf = 0;
+                radioButtons.forEach(function(radioButton) {
+                    radioButton.addEventListener('change', function() {
+                        const id = this.id;
+                        const value = this.checked ? 1 : 0;
+
+                        if (id === 'or') {
+                            or = value;
+                        } else if (id === 'immobilier') {
+                            immobilier = value;
+                        } else if (id === 'actions') {
+                            actions = value;
+                        } else if (id === 'cryptomonnaies') {
+                            cryptomonnaies = value;
+                        } else if (id === 'prod-structu') {
+                            prodStructu = value;
+                        } else if (id === 'etf') {
+                            etf = value;
+                        }
+
+                        
+                    });
+                });
+
+                /*
+                function filterAssets(data) {
+                    return data.filter(asset => asset.value !== 0);
+                }
+
+
+                data.datasets[0].data = filterAssets(data.datasets[0].data);
+                updateChart();
+                */ 
+
+
+
+                var data = {
+                    labels: ['ETF / Indices', 'Cryptomonnaies', 'Actions', 'Immobilier', 'Matières primaires', 'Produits structurés', 'Crypto'],
                     datasets: [{
-                        data: [revenu, epargne, totalAsset],
+                        data: ['20', '20', '20', '20', frequence, risque],
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.5)', // Rouge
                             'rgba(54, 162, 235, 0.5)', // Bleu
@@ -179,23 +284,49 @@
                     }]
                 };
 
-                // Configuration du Pie Chart
+
+                
+
+
                 const config = {
                     type: 'pie',
                     data: data,
                 };
                 
-
-                // Dessiner le Pie Chart
-                const ctx = document.getElementById('myChart').getContext('2d');
+                //Pie Chart
+                const ctx = document.getElementById('secondChart').getContext('2d');
                 new Chart(ctx, config);
+
+
+
+                //Update en bougeant les sliders
+                const sliderFrequence = document.getElementById('sliderTwo');
+                sliderFrequence.addEventListener('input', function() {
+                    frequence = parseFloat(this.value);
+                    data.datasets[0].data[1] = frequence;
+                    updateChart();
+                });
+
+
+                const sliderRisque = document.getElementById('slider');
+                sliderRisque.addEventListener('input', function() {
+                    risque = parseFloat(this.value);                    
+                    data.datasets[0].data[2] = risque;
+                    updateChart();
+                });
+
+                function updateChart() {
+                    const existingChart = Chart.getChart('secondChart');
+                    if (existingChart) {
+                        existingChart.destroy();
+                    }
+                    const ctx = document.getElementById('secondChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'pie',
+                        data: data,
+                    });
+                }
             });
             
         </script>
-
-
-
-
-
-    </section>
 </body>
