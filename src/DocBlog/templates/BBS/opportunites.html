@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+
+    <title>BBSW</title>
+
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body>
+   
+
+    
+    <div class="navigator">
+        <nav >
+            <ul>
+                <li><img src="{% static 'css/husky.png' %}" id="icone"></li>
+                <li><a href="/plan-investissement/">Mon plan d'investissement</a></li>
+                <li><a href="/me-former/">Formation / Newsletter</a></li>
+                <li><a href="/dashboard/">Dashboard</a></li>
+                <li><img src="{% static 'css/user.png' %}" id="user"></li>
+                
+            </ul>
+        </nav>
+    </div>
+
+    <div class="boutons">
+        <div class="bouton-timeline">
+          <button class="submit" id="submit">Ce qu'il s'est passé sur le marché </button>
+        </div>
+        <div class="bouton-opport">
+          <button class="opportunites">Opportunités d'investissement</button>
+        </div>
+    </div>
+    <script>
+        document.getElementById("submit").addEventListener("click", function() {
+          window.location.href = "/dashboard/";
+      });
+    </script>
+</body>

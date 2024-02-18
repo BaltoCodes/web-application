@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from .views import index, graph_view, calculator_view, get_message, world_is_yours, interactive_graph,spotify, rendement_wealth_management,  spotify_callback, obtenir_login, hull, world, thomas, plan_investissement, formation, dashboard
+from .views import index, graph_view, calculator_view, get_message, world_is_yours, interactive_graph,spotify, rendement_wealth_management,  spotify_callback, obtenir_login, hull, world, thomas, plan_investissement, formation, dashboard, opportunites
 from . import views
 
 
@@ -37,6 +37,8 @@ urlpatterns = [
     path('thomas/', thomas, name="thomas"),
     path('plan-investissement/', plan_investissement, name="plan_investissement"),
     path('me-former/', formation, name="Me former"),
-    path('dashboard/', dashboard, name="Dashborad")
+    path('dashboard/', dashboard, name="Dashborad"),
+    path('dashboard/opportunites', opportunites, name="Opportunités")
+
     #path('create-user/', create_user, name="Create new user")
 ]

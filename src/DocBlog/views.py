@@ -76,6 +76,12 @@ def world(request):
     return render(request, "BBS/world-V1.html")
 
 
+
+
+
+
+
+############ Plateforme de budget allocation
 def thomas(request): 
     return render(request, "BBS/asset-management-for-tho.html")
 
@@ -85,6 +91,9 @@ def formation(request):
 
 def dashboard(request):
     return render(request, 'BBS/dashboard.html')
+
+def opportunites(request):
+    return render(request, 'BBS/opportunites.html')
 
 
 def plan_investissement(request):
@@ -140,7 +149,7 @@ def plan_investissement(request):
     '''
     
      return render(request, "BBS/plan-investissement.html")
-
+#######
 
 
 
