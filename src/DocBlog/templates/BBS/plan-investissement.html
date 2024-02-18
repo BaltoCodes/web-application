@@ -8,7 +8,7 @@
     <title>BBSW</title>
     <link rel="stylesheet" href="{% static 'css/style_plateforme_investissement_base.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <script src="{% static 'css/script-plan-investissement.js' %}"></script>
 
 
     
@@ -20,6 +20,9 @@
                     <li><img src="{% static 'css/husky.png' %}" id="icone"></li>
                     <li><a href="/plan-investissement/">Mon plan d'investissement</a></li>
                     <li><a href="/me-former/">Formation / Newsletter</a></li>
+                    <li><a href="/dashboard/">Dashboard</a></li>
+                    <li><img src="{% static 'css/user.png' %}" id="user"></li>
+
                 </ul>
             </nav>
         </div>
@@ -120,10 +123,7 @@
                         <label for="cryptomonnaies">Cryptomonnaies </label>
                         <input type="radio" name="cryptomonnaies" id="cryptomonnaies"  >
                     </div>
-                    <div class="input-group-categ">
-                        <label for="prod-structu">Produits structurés </label>
-                        <input type="radio" name="prod-structu" id="prod-structu"   >
-                    </div>
+                    
                     <div class="input-group-categ">
                         <label for="etf">ETF / indices</label>
                         <input type="radio" name="etf" id="etf"  >
@@ -164,7 +164,6 @@
                     <output for="sliderTwo" id="sliderValueFreq">Souvent</output>
                 </div>
 
-
                 <script>
                     // Sélection du slider et de l'élément de sortie
                     const slider_second = document.getElementById("sliderTwo");
@@ -186,158 +185,17 @@
                         };
                     });
                 </script>
-
-                
-            
                 <div class="bouton-selection-second">
                     <button type="submit" id="bouton-selection-second">Calculer mon plan d'investissement </button>
                 </div>
-            
-
-            
-            </form>
+            </form> 
             
         </div>
         <div class="secondChart">
             <canvas id="secondChart" width="400" height="400"></canvas>
         </div>
-
-    </div>    
-
-      
-
-        <script>
-            //Renvoi vers la page d'accueil si on clique sur le wolf
-            document.getElementById("icone").addEventListener("click", function() {
-                window.location.href = "/thomas/";
-            });
-
-
-            //Lorsqu'on appuie sur le bouton, calcul de la première répartition d'actifs
-            const secondForm = document.getElementById('secondForm');
-            secondForm.addEventListener('submit', function(event) {
-                const existingChart = Chart.getChart('secondChart');
-
-                if (existingChart) {
-                    existingChart.destroy();
-                }
-                event.preventDefault(); 
-
-                var revenu = parseFloat(document.getElementById('montant').value);
-                var risque = parseFloat(document.getElementById('slider').value);
-                var frequence = parseFloat(document.getElementById('sliderTwo').value);
-                
-                var or = document.getElementById('or').checked ? 1 : 0;
-                var etf = document.getElementById('etf').checked ? 1 : 0;
-                var prodStructu = document.getElementById('prod-structu').checked ? 1 : 0;
-                var actions = document.getElementById('actions').checked ? 1 : 0;
-                var immobilier = document.getElementById('immobilier').checked ? 1 : 0;
-                var cryptomonnaies = document.getElementById('cryptomonnaies').checked ? 1 : 0;
-              
-                const radioButtons = document.querySelectorAll('input[type="radio"]');
-
-
-                function filterData(or, immobilier, actions, cryptomonnaies, prodStructu, etf) {
-                    const filteredData = {
-                        labels: ['ETF / Indices', 'Cryptomonnaies', 'Actions', 'Immobilier', 'Matières primaires', 'Produits structurés', 'Crypto'],
-                        datasets: [{
-                            data: [etf === 1 ? '20' : 0, cryptomonnaies === 1 ? '20' : 0, actions === 1 ? '20' : 0, immobilier === 1 ? '20' : 0, or === 1 ? '20':0 , prodStructu ===1 ? '20' : 0],
-                            backgroundColor: [
-                                'rgba(255, 99, 132, 0.5)' , // Rouge
-                                'rgba(54, 162, 235, 0.5)', // Bleu
-                                'rgba(255, 206, 86, 0.5)' , // Jaune
-                            'rgba(75, 192, 192, 0.5)' , // Vert
-                            ],
-                            borderWidth: 1
-                        }]
-                    };
-
-                    return filteredData;
-                }
-
-                /*
-                let or = 0;
-                let immobilier = 0;
-                let actions = 0;
-                let cryptomonnaies = 0;
-                let prodStructu = 0;
-                let etf = 0;
-                */
-                radioButtons.forEach(function(radioButton) {
-                    radioButton.addEventListener('change', function() {
-                        const id = this.id;
-                        const value = this.checked ? 1 : 0;
-
-                        if (id === 'or') {
-                            or = value;
-                        } else if (id === 'immobilier') {
-                            immobilier = value;
-                        } else if (id === 'actions') {
-                            actions = value;
-                        } else if (id === 'cryptomonnaies') {
-                            cryptomonnaies = value;
-                        } else if (id === 'prod-structu') {
-                            prodStructu = value;
-                        } else if (id === 'etf') {
-                            etf = value;
-                        }
-                        const filteredData = filterData(or, immobilier, actions, cryptomonnaies, prodStructu, etf);
-                        updateChart();
-                        
-                        
-                    });
-                });
-                const filteredData = filterData(or, immobilier, actions, cryptomonnaies, prodStructu, etf);
-
-
-
-
-                const config = {
-                    type: 'pie',
-                    data: filteredData,
-                };
-                
-                //Pie Chart
-                const ctx = document.getElementById('secondChart').getContext('2d');
-                new Chart(ctx, config);
-
-
-
-                //Update en bougeant les sliders
-                const sliderFrequence = document.getElementById('sliderTwo');
-                sliderFrequence.addEventListener('input', function() {
-                    frequence = parseFloat(this.value);
-                    filteredData.datasets[0].data[1] = frequence;
-                    updateChart();
-                });
-
-
-                const sliderRisque = document.getElementById('slider');
-                sliderRisque.addEventListener('input', function() {
-                    risque = parseFloat(this.value);                    
-                    filteredData.datasets[0].data[2] = risque;
-                    updateChart();
-                });
-
-
-
-                function updateChart() {
-                    const existingChart = Chart.getChart('secondChart');
-                    if (existingChart) {
-                        existingChart.destroy();
-                    }
-                    const filteredData = filterData(or, immobilier, actions, cryptomonnaies, prodStructu, etf);
-
-
-                    const ctx = document.getElementById('secondChart').getContext('2d');
-                    new Chart(ctx, {
-                        type: 'pie',
-                        data: filteredData,
-                    });
-                }
-        
-            });
-
-            
-        </script>
+        <div class="zone-bouton-render">
+            <bouton type="submit" id="bouton-render">Télécharger mon plan</bouton>
+        </div>
+    </div>          
 </body>

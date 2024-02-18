@@ -83,6 +83,9 @@ def formation(request):
     return render(request, "BBS/formation.html")
 
 
+def dashboard(request):
+    return render(request, 'BBS/dashboard.html')
+
 
 def plan_investissement(request):
      response=None
