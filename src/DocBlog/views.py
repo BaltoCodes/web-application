@@ -28,7 +28,7 @@ from yahoo_fin.stock_info import get_data
 
 ##########  Variables   ##########
 client_id = '7cb7124d4b2c48ec8dc755744a6451ce'
-client_secret = 'b1508082388f4e71bc8ed94bada90280'
+client_secret = ''
 url_redirect = 'http://127.0.0.1:8000/callback/'
 spotify_token_uri='https://accounts.spotify.com/api/token'
 spotify_auth_uri='https://accounts.spotify.com/authorize'
@@ -360,7 +360,7 @@ def generation_data(coin,interval):
     #df1=pd.DataFrame(columns=pairList)
     #for pair in pairList:
         # print(pair)
-    binance = Client('y4pd3mx4kPQ5drHGA7xtv7xuUCobXcBJSJJ54zV5oZmAz4RXgEXwAJ9uEmzwarD2','qMr0iTqa1byVDs3xHvq0BKGO29msysaFuKYp9zKkGDa4SThE97XTbufKXyEo9J24')
+    binance = Client('','')
 
     dfList = pd.DataFrame(columns= ['Open_time', 'Open', 'High', 'Low', 'Close', 'Volume', 'Close_time'])
     candle = binance.get_klines(symbol = coin, interval =interval)
