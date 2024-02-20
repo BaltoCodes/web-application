@@ -1,0 +1,209 @@
+
+body{
+    background: linear-gradient(to bottom right, rgba(216, 186, 228, 0.438),  rgba(255, 117, 117, 0) 100%) no-repeat;
+    min-height: 100vh;
+    margin:0;
+    width: 100%;
+  
+  }
+  html{
+    scroll-behavior: smooth;
+  }
+  
+  nav {
+    background: linear-gradient(to bottom right, rgba(116, 1, 162, 0.9),  rgba(255, 255, 255, 0.9) );
+  
+    margin-top: 0;
+    margin-right: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 50px;
+    position:fixed;
+    top:0;
+    z-index: 100000000;
+  
+  }
+  
+  nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    position:fixed; 
+  }
+  
+  nav li {
+    float: left;
+  }
+  
+  nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    text-transform: uppercase;
+    font-style: bold;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  nav li a:hover {
+    background-color: #111;
+  }
+  
+  #icone{
+    height: 50px;
+    width: 50px;
+  }
+  
+  #icone:hover{
+  background-color: #111;
+  }
+  
+  #user{
+    height:30px;
+    width: 30px;
+    position: absolute;
+    top: 1%; 
+    right: 10px; 
+  }
+
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+table {
+    width: 1200px;
+    border-collapse: collapse;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+th,
+td {
+    padding: 15px;
+    background-color:  linear-gradient(to  right, rgb(0, 0, 0), rgb(255, 255, 255), 100%);
+    color: #000000;
+}
+
+th {
+    text-align: left;   
+}
+
+thead {
+    th {
+        background-color: #55608f;
+    }
+}
+
+tbody {
+    tr {
+        &:hover {
+            background-color: rgba(201, 101, 101, 0.3);
+        }
+    }
+    
+}
+
+.icone{
+    width:70px;
+    height:70px;
+    border-radius: 50%;
+    overflow: hidden;
+    position:relative;
+
+}
+.icone img{
+    width: 100%; 
+    height: auto;
+    overflow: hidden;
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+
+*{
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: "Poppins", sans-serif;
+
+}
+
+
+::selection{
+color: #fff;
+background: #3ea0e2;
+}
+
+
+
+.boutons{
+width:100%;
+display:flex;
+margin-top:50px;
+flex-direction: row;
+font-size: 30px;
+font-weight: 500;
+}
+.bouton-timeline{
+width:100%;
+height:50px;
+padding : 10px;
+border-radius: 20px;
+justify-content: center;
+
+}
+.opportunites{
+background:linear-gradient(to left, rgba(116, 1, 162, 0.6),  rgba(195, 159, 220, 0.6), rgba(195, 159, 220, 0.6),rgba(116, 1, 162, 0.6));
+width:100%;
+font-size: 18px;
+font-weight: 500;
+border:hidden;
+border-radius: 5px;
+padding-top: 8.5px;
+padding-bottom: 8.5px;
+z-index: 10000;
+text-transform: uppercase;
+cursor:pointer;
+
+
+}
+
+
+
+
+.submit{
+background:linear-gradient(to left, rgba(116, 1, 162, 0.25), rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25),rgba(116, 1, 162, 0.25));
+width:100%;
+font-size: 14px;
+font-weight: 500;
+border: hidden;
+border-radius: 5px;
+padding-top: 5px;
+padding-bottom: 5px;
+z-index: 10000;
+text-transform: uppercase;
+cursor:pointer;
+}
+
+.submit:hover {
+background-color: #474747;
+}
+.opportunites:hover {
+background-color: #474747;
+}
+
+.bouton-opport{
+width:100%;
+height:50px;
+justify-content: center;
+background-color: rgba(255, 255, 255, 0.1);
+padding : 10px;
+border-radius: 50px;
+font-size: 30px;
+font-weight: 500;
+}

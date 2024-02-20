@@ -71,8 +71,7 @@ nav li a:hover {
 
 
 .affinage{
-
-    background-color: rgb(123, 123, 123);
+    background:linear-gradient(to bottom right, rgba(123, 123, 123, 0.4), rgba(255,255,255,1));
     padding : 30px;
     border-radius: 20px; 
     color: rgb(5, 5, 5);
@@ -81,6 +80,8 @@ nav li a:hover {
     margin-left: 5%;
     width: 600px;
     height: 500px;
+    border-width: 100px;
+    border-color: #000000;
 }
 
 
@@ -88,12 +89,13 @@ nav li a:hover {
 .input-group {
     display: flex;
     align-items: center;
-    flex-direction: row;
+    flex-direction: column;
     margin-bottom: 10px;    
 }
 
 input[type="number"] {
-    margin-left : 5%; /* Ajouter de l'espace entre l'étiquette et le champ input */
+    margin-top:10px;
+    margin-left : 0; /* Ajouter de l'espace entre l'étiquette et le champ input */
 }
 
 .disclaimer{
@@ -121,8 +123,9 @@ input[type="number"] {
 .secondChart{
     height: 400px;
     width: 400px;
-    margin-right:10%;
-    margin-top: 10%;
+    
+    margin-top: 25%;
+    transform: translateX(-50%);
 
 }
 .chart{
@@ -131,6 +134,33 @@ input[type="number"] {
 
 }
 
+.partie-droite{
+    display:flex;
+    flex-direction: column;
+}
+
+.second-bouton{
+    margin-top: 70px;
+    transform: translateX(-12%);
+    
+}
+
+#bouton-suite{
+    color: rgb(0, 0, 0);
+    background-color: rgb(149, 225, 73);
+    border-radius: 20px;
+    text-align: center;
+    font-style:bold;
+    font-weight: 400;
+    border: none;
+    margin-top: 20px;
+    padding:10px; 
+    border-color: #000000;
+    border-width: 10px;
+
+}
+
+    
 
 
 
@@ -152,14 +182,11 @@ input[type="number"] {
     width:20%;    
 }
 
-
-.slider {
-    display: flex;
-    flex-direction: column ;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 50px;
+.slider{
+    margin-top:50px;
 }
+
+
 .slider-and-tooltip{
     display: flex;
     flex-direction: row ;
@@ -167,6 +194,9 @@ input[type="number"] {
     justify-content: space-between;
 
 
+}
+.slider-input {
+    transform: translateX(50%);
 }
 
 
@@ -183,6 +213,7 @@ input[type="number"] {
     cursor: pointer;
     display: flex;
     margin-right: 5%;
+    transform:translateX(10%);
 
   }
 
@@ -241,7 +272,7 @@ input[type="number"] {
 }
 
 input[type="range"] {
-	color: #ef233c;
+	color: #000000;
 	--thumb-height: 1.125em;
 	--track-height: 0.125em;
 	--track-color: rgba(0, 0, 0, 0.2);
@@ -262,7 +293,7 @@ input[type="range"].win10-thumb {
 	
 
 	input[type="range"] {
-		color: #f07167;
+		color: #805dacdc;
 		--track-color: rgba(255, 255, 255, 0.1);
 	}
 

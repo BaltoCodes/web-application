@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
 
     <title>BBSW</title>
-    <link rel="stylesheet" href="{% static 'css/style_plateforme_investissement_base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style_plateforme_investissement.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="{% static 'css/script-plan-investissement.js' %}"></script>
+    <script src="{% static 'css/script-investissement.js' %}"></script>
+
+
   
 </head>
 <body>
@@ -25,106 +27,43 @@
             </nav>
         </div>
 
-<!--
-        <div class="selection">
-            <h4>Définir mon profil investisseur : </h4>
-            <div class="disclaimer">
-                <p>Aucune information n'est divulguée ou gardée en mémoire</p>
-
-            </div>
-
-            <div class="selector">
-
-            
-            <form method="post" action="{% url 'plan_investissement' %}" id="myForm">
-                {% csrf_token %}
-                
-                <div class="input-group">
-                    <label for="revenu">Revenu mensuel :</label>
-                    <input type="number" name="revenu" id="revenu" required >
-                </div>
-            
-                <div class="input-group align-input">
-                    <label for="epargne">Je suis prêt à épargner :</label>
-                    <input type="number" name="epargne" id="epargne" required >
-                </div>
-            
-                <div class="input-group">
-                    <label for="total-asset">J'ai de côté :</label>
-                    <input type="number" name="total-asset" id="total-asset"  required >
-                </div>
-            
-                <div class="input-group">
-                    <label for="but-investissement">Je souhaite investir pour ...</label>
-                    <select name="but-investissement" required>
-                        <option value="generer un rendement interessant">Générer un rendement intéressant</option>
-                        <option value="put">Investir sur le long terme</option>
-                    </select>
-                </div>
-                
-                    
-                <div class="input-group">
-                    <label for="risque">Pour moi, avoir une position de 1000 euros et être en perte de 200 euros ... </label>
-                    <select name="risque" required>
-                        <option value="risque-averse">Je m'en fous</option>
-                        <option value="risque-sensible">Surtout pas !</option>
-                    </select><br>
-                </div>
-
-                
-                <div class="bouton-selection">
-                    <button type="submit" id="bouton-selection">Calculer mon plan d'investissement </button>
-                </div>
-            
-
-            </div>
-            </form>
-
-            <div class="chart">
-                <canvas id="myChart" width="200" height="200"></canvas>
-            </div>
-        
-        </div>
-    -->
-        
-
-        
-    
+  
 
 
     <div class="whole">
         <div class="affinage">
-            <h4>Définir mes préférences d'investissement</h4>
+            <h4 style="margin-top: 0;">Définir mes préférences d'investissement</h4>
             <form method="post" action="{% url 'plan_investissement' %}" id="secondForm">
-                {% csrf_token %}
+                {% csrf_token %}    
                 
                 <div class="input-group">
+                    
                     <label for="montant">Montant à investir : </label>
                     <input type="number" name="montant" id="montant" required >
                 </div>
             
-                <p>Dans quoi je souhaite investir</p>
+                <p style="margin-top: 30px; font-weight: 300;">Dans quoi je souhaite investir</p>
                 <div class="categories">
                     <div class="input-group-categ">
                         <label for="or">Matières primaires (Or / Argent) </label>
-                        <input type="radio" name="or" id="or"   >
+                        <input type="checkbox" name="or" id="or">
                     </div>
                     <div class="input-group-categ">
                         <label for="immobilier">Immobilier </label>
-                        <input type="radio" name="immobilier" id="immobilier"   >
+                        <input type="checkbox" name="immobilier" id="immobilier"   >
                     </div>
                     <div class="input-group-categ">
                         <label for="Actions">Actions </label>
-                        <input type="radio" name="actions" id="actions"  >
+                        <input type="checkbox" name="actions" id="actions"  >
                     </div>
                     <div class="input-group-categ">
                         <label for="cryptomonnaies">Cryptomonnaies </label>
-                        <input type="radio" name="cryptomonnaies" id="cryptomonnaies"  >
+                        <input type="checkbox" name="cryptomonnaies" id="cryptomonnaies"  >
                     </div>
                     
                     <div class="input-group-categ">
                         <label for="etf">ETF / indices</label>
-                        <input type="radio" name="etf" id="etf"  >
+                        <input type="checkbox" name="etf" id="etf"  >
                     </div>
                 </div>
                 
@@ -133,7 +72,9 @@
                 <div class="slider">
                     <label for="slider">Mon taux de risque :</label>
                     <div class="slider-and-tooltip">
-                        <input type="range" id="slider" name="slider" min="0" max="10" value="5" step="0.1">
+                        <div class="slider-input">
+                            <input type="range" id="slider" name="slider" min="0" max="10" value="5" step="0.1">
+                        </div>
                         <span class="tooltip">
                             <span class="bubble">Le risque peut être mesuré comme ceci : si, sur un investissement de 1000 euros, on ne souhaite pas avoir de moins value de 200 euros, alors le risque doit être bas</span>
                         </span>
@@ -189,11 +130,24 @@
             </form> 
             
         </div>
-        <div class="secondChart">
-            <canvas id="secondChart" width="400" height="400"></canvas>
+        <div class="partie-droite">
+            <div class="secondChart">
+                <canvas id="secondChart" width="400" height="400"></canvas>
+            </div>
+            <div class="second-bouton">
+                <button id="bouton-suite" style="display: none;">Passer à la suite</button>
+            </div>
         </div>
-        <div class="zone-bouton-render">
-            <bouton type="submit" id="bouton-render">Télécharger mon plan</bouton>
-        </div>
+
+        
+
+        <script>
+            const boutonGraphique = document.getElementById('bouton-selection-second');
+            const autreBouton = document.getElementById('bouton-suite');
+
+            boutonGraphique.addEventListener('click', function() {
+                autreBouton.style.display = 'block';
+            });
+        </script>
     </div>          
 </body>

@@ -7,8 +7,11 @@
 
     <title>BBSW</title>
 
-    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/opport.css' %}">
+   
 </head>
+
+
 <body>
    
 
@@ -39,4 +42,64 @@
           window.location.href = "/dashboard/";
       });
     </script>
+
+
+
+
+
+
+
+
+
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Catégorie</th>
+                    <th>Nom de l'actif</th>
+                    <th>Plateforme d'échange</th>
+                    <th>Type d'ordre</th>
+                    <th>Date</th>
+                    <th>Prix d'achat / vente</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="btc">
+                    <td class="icone"><img src="{% static 'css/icone/btc.png' %}" alt="img"></td>
+                    <td>BTCUSDT</td>
+                    <td>Binance</td>
+                    <td style="color:green; font-weight: 300;">Achat</td>
+                    <td>20/02/2024</td>
+                    <td>47000$</td>
+                </tr>
+                <tr class="eth">
+                    <td class="icone"><img src="{% static 'css/icone/eth-logo.png' %}" alt="img"></td>
+                    <td>ETHUSDT</td>
+                    <td>Binance</td>
+                    <td style="color:red; font-weight: 300;">Vente</td>
+                    <td>20/02/2024</td>
+                    <td>2910$</td>
+                </tr>
+                <tr class="sol">
+                    <td class="icone"><img src="{% static 'css/icone/sol-logo.png' %}" alt="img"></td>
+                    <td>SOLUSDT</td>
+                    <td>Binance</td>
+                    <td style="color:red; font-weight: 300;">Vente</td>
+                    <td>20/02/2024</td>
+                    <td>108$</td>
+                </tr>
+                <tr class="arb">
+                    <td class="icone"><img src="{% static 'css/icone/arb-logo.png' %}" alt="img"></td>
+                    <td>ARBUSDT</td>
+                    <td>Binance</td>
+                    <td style="color:green;">Achat</td>
+                    <td>19/02/2024</td>
+                    <td>2$</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
 </body>
